@@ -1,0 +1,13 @@
+CREATE DATABASE `home`;
+USE `home`;
+CREATE TABLE `students` (
+	`id` VARCHAR(50) NOT NULL DEFAULT '',
+	`name` VARCHAR(50) NOT NULL DEFAULT '',
+	`grade` INT NOT NULL DEFAULT '',
+	`className` VARCHAR(50) NOT NULL DEFAULT ''
+);
+CREATE TABLE `courses` (
+	`id` VARCHAR(50) NOT NULL,
+	`student_id` VARCHAR(50) NOT NULL,
+	`name` VARCHAR(50) NOT NULL
+);

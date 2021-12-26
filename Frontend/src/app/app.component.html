@@ -1,0 +1,105 @@
+<table class="table table-hover table-striped">
+  <colgroup>
+    <col style="width: 30%">
+    <col style="width: 3%">
+    <col style="width: 10%">
+    <col style="width: 32%">
+    <col style="width: 25%">
+  </colgroup>
+  <tr id="rowHeader" class="bg-dark text-white" style="position: sticky;">
+    <th class="text-center">Student Name</th>
+    <th class="text-center">Grade</th>
+    <th class="text-center">Class</th>
+    <th class="text-center">Courses</th>
+    <th colspan="" class="text-center">Action</th>
+  </tr>
+  <tbody>
+    <tr *ngFor="let student of studentListArr">
+      <td class="text-center">
+        <div>{{student.name}}</div>
+      </td>
+      <td class="text-center">
+        <div *ngIf="!editing">{{student.grade}}</div>
+        <div class="dropdown" *ngIf="editing">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">{{student.grade}}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let grade of gradeList" (click)="student.grade = grade">{{grade}}</a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <div *ngIf="!editing">{{student.classname}}</div>
+        <div class="dropdown" *ngIf="editing">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">{{student.classname}}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let class of classList" (click)="student.classname = class">{{class}}</a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <div>{{student.course_name.toString()}}</div>
+        <div class="dropdown" *ngIf="editing">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"></button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let course of courseList">
+              <input type="checkbox" class="checkbox mr-3" (change)="onChangeEdit(course, $event.target.checked, student.id)" [checked]="checkCourse(student.course_name, course)"> 
+              {{course}}
+            </a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <button class="btn btn-primary" (click)="edit()" *ngIf="!editing">Edit</button>
+        <button class="btn btn-success" (click)="save(student)" *ngIf="editing">Save</button>
+        <button class="btn btn-danger ml-3" (click)="delete(student.id)" *ngIf="!editing">Delete</button>
+        <button class="btn btn-secondary ml-3" (click)="cancel()" *ngIf="editing">Cancel</button>
+      </td>
+    </tr>
+    <tr style="position: sticky;">
+      <td class="text-center"><input type="text" id="name"></td>
+      <td class="text-center">
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">{{newStudent.grade}}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let grade of gradeList" (click)="newStudent.grade = grade">{{grade}}</a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">{{newStudent.classname}}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let class of classList" (click)="newStudent.classname = class">{{class}}</a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <div>{{newStudent.course_name.toString()}}</div>
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"></button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let course of courseList">
+              <input type="checkbox" class="checkbox mr-3" (change)="onChange(course, $event.target.checked)">
+              {{course}}
+            </a>
+          </div>
+        </div>
+      </td>
+      <td class="text-center"><button class="btn btn-info" (click)="add()">Add</button></td>
+    </tr>
+  </tbody>
+</table>
+<div class="fixed-bottom">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control ml-3 mr-3" placeholder="Filter by name" aria-label="Filter by name"
+      #name aria-describedby="basic-addon2">
+    <input type="text" class="form-control ml-3 mr-3" placeholder="Filter by course name" aria-label="Filter by course name"
+      #course_name aria-describedby="basic-addon2">
+  </div>
+</div>
